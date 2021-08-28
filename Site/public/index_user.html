@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shotcut icon" href="img/loguinho.png" >
+
+  <title>Dashboard :: Home</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor_user/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css_user/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<style>
+  .card
+  {
+    margin-top: 4%;
+    margin-left: 9%;
+    width: 7rem;
+    float: left;
+    position: initial;
+    height: 100px;
+  }
+</style>
+
+<body onload="c()">
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="border-right" id="sidebar-wrapper" style="background-color:#222222">
+      <div class="sidebar-heading"><img src="img/loguinho.png" style="width:36px; height:36px; margin-bottom: 6%"> Digital Fruits Solutions </div>
+      <div class="list-group list-group-flush">
+        <a href="index_user.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Página Inicial</a>
+        <a href="monitoramento.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Monitoramento</a>
+        <a href="alerta.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Histórico de alertas</a>
+    </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light border-bottom" style="background-color:#222222"> <!--NavBar  -->
+
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" style="color: #ffffff" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Menu
+            </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="index_user.html">Página Inicial</a>
+            <a class="dropdown-item" href="monitoramento.html">Monitoramento</a>
+            <a class="dropdown-item" href="alerta.html">Histórico de alertas</a>
+            <a class="dropdown-item" href="profile.html">Perfil</a>
+            <a class="dropdown-item" href="config.html">Configurações</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" onclick="parar()">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <h1 class="mt-4">Página Inicial</h1>
+        <div id="trucks" style="justify-content: space-around">
+        <center>
+
+          <form id="form_caminhao">
+              <input type='hidden' id='iduser' name='iduser'></input>
+              <input type='hidden' id='nsensor' name='nsensor'></input>
+			</form>
+
+
+         
+            <span id='caminhao'></span><br>
+			<span id='aguarde'></span>
+
+          <!-- <div class="card">
+            <img src="img/Verde.png" class="card-img-top" id="truck" name="truck1" onload="cor()" onclick="">
+          </div>
+          <div class="card">
+            <img src="img/Amarelo.png" class="card-img-top" id="truck" name="truck2" onload="cor()" onclick="">            
+          </div>
+          <div class="card">
+            <img src="img/Vermelho.png" class="card-img-top" id="truck" name="truck3" onload="cor()" onclick="">            
+          </div>
+          <div class="card">
+              <img src="img/truck.png" class="card-img-top" id="truck" name="truck4" onload="cor()" onclick="">              
+          </div>
+          <div class="card">
+              <img src="img/truck.png" class="card-img-top" id="truck" name="truck5" onload="cor()" onclick="">              
+          </div>
+          <div class="card">
+              <img src="img/truck.png" class="card-img-top" id="truck" name="truck6" onload="cor()" onclick="">              
+            </div>
+            <div class="card">
+              <img src="img/truck.png" class="card-img-top" id="truck" name="truck7" onload="cor()" onclick="">              
+            </div>
+            <div class="card">
+              <img src="img/truck.png" class="card-img-top" id="truck" name="truck8" onload="cor()" onclick="">              
+            </div>
+            <div class="card">
+                <img src="img/truck.png" class="card-img-top" id="truck" name="truck9" onload="cor()" onclick="">                
+            </div>
+            <div class="card">
+                <img src="img/truck.png" class="card-img-top" id="truck" name="truck10" onload="cor()" onclick="">                
+            </div>
+            <div class="card">
+                <img src="img/truck.png" class="card-img-top" id="truck" name="truck11" onload="cor()" onclick="">                
+              </div>
+              <div class="card">
+                <img src="img/truck.png" class="card-img-top" id="truck" name="truck12" onload="cor()" onclick="">                
+              </div>
+              <div class="card">
+                <img src="img/truck.png" class="card-img-top" id="truck" name="truck13" onload="cor()" onclick="">                
+              </div>
+              <div class="card">
+                  <img src="img/truck.png" class="card-img-top" id="truck" name="truck14" onload="cor()" onclick="">
+              </div>
+              <div class="card">
+                  <img src="img/truck.png" class="card-img-top" id="truck" name="truck15" onload="cor()" onclick=""> -->
+              </div>
+          <br><br><br><br><br>
+
+        </center>
+        </div>
+        <!-- <center> <img src="img/aguarde.gif" id="img_aguarde" style="display: none;" width="100px" height="100px"></center> -->
+        <center style="margin-top: 33%">
+        <button type="submit" class="btn btn-primary" style="background-color:#39b300e1;border-color:#39b300e1"><a style="color:#ffffff" href="monitoramento.html">Monitorar sensor(es)</a></button>
+        <button type="submit" class="btn btn-primary" style="background-color:#39b300e1;border-color:#39b300e1"><a style="color:#ffffff" href="config.html"><i>Adicionar sensor</i></a></button>
+        </center>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor_user/jquery/jquery.min.js"></script>
+  <script src="vendor_user/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
+
+
+<script>
+  sessionStorage.form1 = 0;
+  function parar()
+  {
+    sessionStorage.clear();
+    window.location = 'login.html';
+  }
+	function c(){
+	cor();
+	setTimeout(c, 5000);
+	}
+    function cor()
+    {
+	aguarde.innerHTML = '<img src="img/aguarde.gif">';
+    var s = sessionStorage.sensor.split(',');
+	var ids = [];
+	document.getElementById('iduser').value = sessionStorage.id;
+	document.getElementById('nsensor').value = s.length;
+  	if(sessionStorage.caminhaoform == 1){
+	var formulario = new URLSearchParams(new FormData(form_caminhao));
+        fetch('/leituras/caminhao', {
+            method: "POST",
+            body: formulario
+        }).then((response) => {
+            if(response.ok){
+              response.json().then(function (resposta){
+              //alert('Sensores encontrados com sucesso!');
+			  aguarde.innerHTML = '';
+              let cons = 0;
+              caminhao.innerHTML = '';
+              while(cons < resposta.length){
+              ids.push(resposta[cons]);
+              var idSensor = resposta[cons].idSensor[0];
+              var codErro = resposta[cons].cod_erro;
+              var coralerta = resposta[cons].cor_erro;
+              var descricao = resposta[cons].descricao;
+              
+              if(coralerta == 'Verde'){
+                
+              caminhao.innerHTML +='<div class="card">'+
+                                        '<img src="img/Verde.png" class="card-img-top">'  +          
+                                        '</div>';
+                                        cons++; }
+
+                
+              else if(coralerta == 'Vermelho'){
+              caminhao.innerHTML +='<div class="card">'+
+                                        '<img src="img/Vermelho.png" class="card-img-top">'+        
+                                        '</div>'; 
+                                        cons++; } 
+
+                
+              else if(coralerta == 'Amarelo'){
+              caminhao.innerHTML +='<div class="card">'+
+                                        '<img src="img/Amarelo.png" class="card-img-top">'+          
+                                        '</div>'; 
+                                        cons++; }}
+                });
+                }else{
+                    console.log('Erro na busca.');
+                }
+            });
+                return false;
+	}else if(sessionStorage.caminhaoForm == 0){
+	form_caminhao.submit();
+	sessionStorage.caminhaoform = 1;
+	}
+    }
+  </script>

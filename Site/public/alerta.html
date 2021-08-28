@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shotcut icon" href="img/loguinho.png" >
+
+  <title>Dashboard :: Histórico de Alerta</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor_user/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css_user/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body onload="adicionar()">
+
+  <style>
+    body {
+  overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.0rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}  
+  </style>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="border-right" id="sidebar-wrapper" style="background-color:#222222">
+        <div class="sidebar-heading"><img src="img/loguinho.png" style="width:36px; height:36px; margin-bottom: 6%"> Digital Fruits Solutions </div>
+        <div class="list-group list-group-flush" >
+            <a href="index_user.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Página Inicial</a>
+            <a href="monitoramento.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Monitoramento</a>
+            <a href="alerta.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Histórico de alertas</a>
+      </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+  
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+  
+        <nav class="navbar navbar-expand-lg navbar-light border-bottom" style="background-color:#222222"> <!--NavBar  -->
+
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" style="color: #ffffff" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Menu
+            </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="index_user.html">Página Inicial</a>
+            <a class="dropdown-item" href="monitoramento.html">Monitoramento</a>
+            <a class="dropdown-item" href="alerta.html">Histórico de alertas</a>
+            <a class="dropdown-item" href="profile.html">Perfil</a>
+            <a class="dropdown-item" href="config.html">Configurações</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" onclick="parar()">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <h1 class="mt-4">Histórico de Alertas</h1>
+        <br><br><br>
+        <form id="form_sensor" >
+            <input type='hidden' id='iduser' name='iduser'></input>
+            <input type='hidden' id='nsensor' name='nsensor'></input>
+            <center><span id='tabelaBanco'></span></center>
+           <center> <img src="img/aguarde.gif" id="img_aguarde" style="display: none;" width="100px" height="100px"></center>
+          </form>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor_user/jquery/jquery.min.js"></script>
+  <script src="vendor_user/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  sessionStorage.form1 = 0;
+  sessionStorage.caminhaoForm = 0;
+  var s = sessionStorage.sensor.split(',');
+	var ids = [];
+	document.getElementById('iduser').value = sessionStorage.id;
+  document.getElementById('nsensor').value = s.length;
+
+
+  
+      function adicionar(){
+        var formulario = new URLSearchParams(new FormData(form_sensor));
+        console.log(formulario);
+        img_aguarde.style.display='inline';
+        fetch('/leituras/historico', {
+            method: "POST",
+            body: formulario
+        }).then((response) => {
+          
+            if(response.ok){
+              response.json().then(function (resposta){
+                img_aguarde.style.display='none';
+              //alert('Sensores encontrados com sucesso!');
+              let cons = 0;
+              tabelaBanco.innerHTML = `<table style='border:2px solid green;text-align: center;' border=3; class="table table-striped table-bordered">
+                  <tbody id='tbodyBanco'>  
+                <thread>
+            <tr>
+              <th>Id</th>
+              <th>Codigo do erro</th>
+              <th>Horario</th>
+              <th>Cor do Alerta</th>
+              <th>Descrição</th>
+            </tr>
+                  </thread>
+            `;
+              while(cons < resposta.length){
+              ids.push(resposta[cons]);
+              var idSensor = resposta[cons].idSensor;
+              var codErro = resposta[cons].cod_erro;
+              var coralerta = resposta[cons].cor_erro;
+              var descricao = resposta[cons].descricao;
+              var hora = resposta[cons].datahora;
+                tbodyBanco.innerHTML +=`<tr> 
+                                  <td>${idSensor}</td>
+                                  <td>${codErro}</td>
+                                  <td>${hora}</td>
+                                  <td>${coralerta}</td>
+                                  <td>${descricao}</td> 
+                                        </tr>`; 
+                                        cons++; }
+                tabelaBanco.innerHTML +=`</tbody>
+               
+            
+            </table>`});
+                }else{
+                    console.log(`Erro no registro.`);
+                }
+            });
+                return false;
+        }
+      
+
+    
+    function parar()
+  {
+    sessionStorage.clear();
+    window.location = 'login.html';
+  }
+  </script>
+
+</body>
+
+</html>

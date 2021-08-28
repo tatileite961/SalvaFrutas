@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shotcut icon" href="img/loguinho.png" >
+
+  <title>Dashboard :: Monitoramento</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor_user/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css_user/simple-sidebar.css" rel="stylesheet">
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+</head>
+
+<body onload="m()">
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="border-right" id="sidebar-wrapper" style="background-color:#222222">
+        <div class="sidebar-heading"><img src="img/loguinho.png" style="width:36px; height:36px; margin-bottom: 6%"> Digital Fruits Solutions </div>
+        <div class="list-group list-group-flush" >
+          <a href="index_user.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Página Inicial</a>
+        <a href="monitoramento.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Monitoramento</a>
+        <a href="alerta.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Histórico de alertas</a>
+      </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+  
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+  
+        <nav class="navbar navbar-expand-lg navbar-light border-bottom" style="background-color:#222222"> <!--NavBar  -->
+
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" style="color: #ffffff" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Menu
+            </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="index_user.html">Página Inicial</a>
+            <a class="dropdown-item" href="monitoramento.html">Monitoramento</a>
+            <a class="dropdown-item" href="alerta.html">Histórico de alertas</a>
+            <a class="dropdown-item" href="profile.html">Perfil</a>
+            <a class="dropdown-item" href="config.html">Configurações</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" onclick="parar()">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+        <div class="container-fluid">
+		<h1 class="mt-4">Monitoramento</h1><br><br>
+		<span id='container' class="container row"></span>
+        <span id='container2' style="display: none;"></span>
+        </div>
+    <div id="div_grafico" style="float:left; position: relative;"></div>
+    <div id="div_grafico1" style="float:left; position: relative; margin-left: 3%;"></div> <br>
+    <center>
+		<img src='img/aguarde.gif' id="img_aguarde" style="display: none; " width="100px" height="100px">
+    <br>
+    <div id='botao' style="display: none"> 
+        <button type="submit" class="btn btn-primary" 
+        style="background-color:#39b300e1;border-color:#39b300e1; position:relative">
+        <a style="color:#ffffff" onclick="retornar()" >Retornar</a></button>
+                  </div></center>
+		<form name='form1'>
+        <input type='hidden' id='iduser' name='iduser'></input>
+		</form>
+      </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor_user/jquery/jquery.min.js"></script>
+  <script src="vendor_user/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    sessionStorage.caminhaoForm = 0;
+  	var s = sessionStorage.sensor.split(',');
+	var ids = [];
+	document.getElementById('iduser').value = sessionStorage.id;
+	function m(){
+	mostrar();
+	setTimeout(m, 5000);
+	}
+	function mostrar() {
+	if(sessionStorage.form1 == 0){
+	form1.submit();
+	sessionStorage.form1 = 1;
+	}else{
+        var form = new URLSearchParams(new FormData(form1));
+        img_aguarde.style.display='inline';
+        fetch('/usuarios/monitor', {
+            method: "POST",
+			body: form
+          }).then((response) => {
+            if(response.ok){
+                img_aguarde.style.display='none';
+              response.json().then(function (resposta){
+			  let cons = 0;
+			  container.innerHTML = '';
+			  while(cons < resposta.length){
+			  ids.push(resposta[cons]);
+              container.innerHTML +=
+              `<div class="card col-md-3">
+                    <div class="card-body">
+                            <h5 class="card-title"> Sensor <span name="idSensor ${cons+1}"> ${resposta[cons].idSensor[0]}</h5>
+                            
+                            
+                            <p><span style="font-size:1.3rem">Fruta transportada:</span>  <span style="color:#39b300e1" id="fruta${cons+1}" name="fruta${cons+1}">${resposta[cons].descricao}</span></p><br>
+                            <p><span style="font-size:1.3rem">Temperatura atual:</span>  <span style="color:#39b300e1" id="temp'${cons+1}" name="temp${cons+1}">${resposta[cons].temp}</span></p><br>
+                             <p><span style="font-size:1.3rem">Umidade atual:</span>  <span style="color:#39b300e1" id="umiatual'${cons+1}" name="umi${cons+1}">${resposta[cons].umid}</span></p><br>
+                               <center>
+                            <form id="form_monit${resposta[cons].idSensor[0]}" method="POST" onsubmit="event.preventDefault(); obterDadosGrafico(${(resposta[cons].idSensor[0])})">
+		    <input type="hidden" value="${resposta[cons].idSensor[0]}" name="idsen">
+		    <input type="hidden" value="${sessionStorage.id}" name="idu">
+                <button type="submit" class="btn btn-primary" style="background-color:#39b300e1;border-color:#39b300e1"><a style="color:#ffffff" onclick="abrir()" >Gráfico</a></button>
+          </form></center>
+          </div>
+			  
+                       
+                        `;
+                        cons++;
+              
+              
+        //       '<div class="sensor'+(cons+1)+'" id="monit" style="float: left; position: initial;border:1px solid black;">'+
+        //   '<h4 name="sensor'+(cons+1)+'">Sensor <span name="idSensor'+(cons+1)+'">'+(resposta[cons].idSensor[0])+'</span>:</h4>'+
+        //   '<p><span style="font-size:1.3rem">Fruta transportada:</span>  <span style="color:#39b300e1" id="fruta'+(cons+1)+'" name="fruta'+(cons+1)+'">'+(resposta[cons].descricao)+'</span></p><br>'+
+        //   '<p><span style="font-size:1.3rem">Temperatura atual:</span>  <span style="color:#39b300e1" id="temp'+(cons+1)+'" name="temp'+(cons+1)+'">'+(resposta[cons].temp)+'</span></p><br>'+
+        //   '<p><span style="font-size:1.3rem">Umidade atual:</span>  <span style="color:#39b300e1" id="umiatual'+(cons+1)+'" name="umi'+(cons+1)+'">'+(resposta[cons].umid)+'</span></p><br>'+
+        //   '<center>'+
+		//   '<form id="form_monit'+(resposta[cons].idSensor[0])+'" method="POST" onsubmit="event.preventDefault(); obterDadosGrafico('+(resposta[cons].idSensor[0])+')">'+
+		//   '<input type="hidden" value="'+resposta[cons].idSensor[0]+'" name="idsen">'+
+		//   '<input type="hidden" value="'+sessionStorage.id+'" name="idu">'+
+        //     '<button type="submit" class="btn btn-primary" style="background-color:#39b300e1;border-color:#39b300e1"><a style="color:#ffffff" onclick="abrir()" >Gráfico</a></button>'+
+        //   '</form></center>'+
+        //   '</div>';
+		// 	  cons++;
+			  }
+			  }); 
+        
+        return false;
+      }
+     } )
+   }
+   }
+   function abrir(){
+    container.style.display = 'none';
+    botao.style.display = 'inline';
+  
+  }
+  function retornar(){
+    
+    window.location = 'monitoramento.html';
+  }
+	function parar(){
+    sessionStorage.clear();
+    window.location = 'login.html';
+  }
+  
+    function logoff() {
+        sessionStorage.removeItem('usuario_bandtec');
+        verificarAutenticacao();
+    }
+    // Não mexa nestas 3 linhas! 
+    google.load('visualization', '1', {
+        packages: ['corechart','line'],
+    });
+    // Não mexa nessas 3 linhas! 
+    // só mexer se quiser alterar o tempo de atualização
+    // ou se souber o que está fazendo!
+    function atualizarGrafico() {
+        obterDadosGrafico();
+        setTimeout(atualizarGrafico, 5000);
+    }
+    // altere aqui as configurações do gráfico
+    // (tamanhos, cores, textos, etc)
+    function configurarGrafico() {
+        var altura = 400;
+        var largura = 600;
+        var configuracoes = {
+            tooltip: {
+                isHtml: true
+            },
+            trendlines: {
+                0: {
+                    labelInLegend: 'Temperatura'
+                },
+                1: {
+                    labelInLegend: 'Umidade'
+                },
+            },
+            title: 'Histórico recente de Temperatura',
+            legend: { position: 'bottom' },
+            colors: ['green', 'red'],            
+            isStacked: true,
+            width: largura,
+            height: altura,
+            vAxis: {
+                textStyle: {
+                    fontSize: 12
+                }
+            },
+            hAxis: {
+                slantedText: false,
+                slantedTextAngle: 45,
+                textStyle: {
+                    fontSize: 10
+                }
+            },
+            chartArea: {
+                left: 50,
+                top: 20,
+                width: (largura - 10),
+                height: (altura - 90)
+            }
+        };
+        return configuracoes;
+    }
+	
+	    function configurarGrafico1() {
+        var altura = 400;
+        var largura = 600;
+        var configuracoes = {
+            tooltip: {
+                isHtml: true
+            },
+            trendlines: {
+                0: {
+                    labelInLegend: 'Umidade'
+                },
+                1: {
+                    labelInLegend: 'Temperatura'
+                },
+            },
+            title: 'Histórico recente de Umidade',
+            legend: { position: 'bottom' },
+            colors: ['red','green'],            
+            isStacked: true,
+            width: largura,
+            height: altura,
+            vAxis: {
+                textStyle: {
+                    fontSize: 12
+                }
+            },
+            hAxis: {
+                slantedText: false,
+                slantedTextAngle: 45,
+                textStyle: {
+                    fontSize: 10
+                }
+            },
+            chartArea: {
+                left: 50,
+                top: 20,
+                width: (largura - 10),
+                height: (altura - 90)
+            }
+        };
+        return configuracoes;
+    }
+    // altere aqui como os dados serão exibidos
+    // e como são recuperados do BackEnd
+    function obterDadosGrafico(orm) {
+	    div_grafico.innerHTML = 'Obtendo dados do gráfico... <br><center><img src="img/aguarde.gif"></center>';
+        var dados = new google.visualization.DataTable();
+        dados.addColumn('string', 'Hora');
+        dados.addColumn('number', 'Temperatura');
+		
+		var dados1 = new google.visualization.DataTable();
+        dados1.addColumn('string', 'Hora');
+        dados1.addColumn('number', 'Umidade');
+		
+		var f = 'form_monit'+orm;
+		var formulario = new URLSearchParams(new FormData(eval(f)));
+		fetch('/leituras/ultima', {
+            method: "POST",
+            body: formulario
+        }).then((response) => {
+               if (response.ok) {
+                response.json().then(function (resposta) {
+                       
+                    resposta.reverse();
+                    
+                    for (i = 0; i < resposta.length; i++) {
+                        var registro = resposta[i];
+                        // aqui, após registro. use os nomes 
+                        // dos atributos que vem no JSON 
+                        // que gerou na consulta ao banco de dados
+                        dados.addRow([ 
+                            registro.datahora,
+                            registro.temp
+                        ]);
+						
+						dados1.addRow([ 
+                            registro.datahora,
+                            registro.umid
+                        ]);
+						
+                    }
+                    plotarGrafico(dados);
+					plotarGrafico1(dados1);                                           
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+            })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+    }
+    // só altere aqui se souber o que está fazendo!
+    function plotarGrafico(dados) {
+        var chart = new google.visualization.LineChart(div_grafico);
+        chart.draw(dados, configurarGrafico());
+    }
+	function plotarGrafico1(dados) {
+        var chart = new google.visualization.LineChart(div_grafico1);
+        chart.draw(dados, configurarGrafico1());
+    }
+</script>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="node/configs/grafico.js"></script>
+</body>
+</html>

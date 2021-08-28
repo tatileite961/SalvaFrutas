@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shotcut icon" href="img/loguinho.png" >
+
+  <title>Dashboard :: Perfil</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor_user/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css_user/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body onload='perfil()'>
+  <style>
+    body {
+  overflow-x: hidden;
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin .25s ease-out;
+  -moz-transition: margin .25s ease-out;
+  -o-transition: margin .25s ease-out;
+  transition: margin .25s ease-out;
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.0rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}  
+  </style>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="border-right" id="sidebar-wrapper" style="background-color:#222222">
+        <div class="sidebar-heading"><img src="img/loguinho.png" style="width:36px; height:36px; margin-bottom: 6%"> Digital Fruits Solutions </div>
+        <div class="list-group list-group-flush" >
+            <a href="index_user.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Página Inicial</a>
+            <a href="monitoramento.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Monitoramento</a>
+            <a href="alerta.html" class="list-group-item list-group-item-action" style="background-color:#222222; color: #ffffff; border-color: #ffffff">Histórico de alertas</a>
+      </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+  
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+  
+        <nav class="navbar navbar-expand-lg navbar-light border-bottom" style="background-color:#222222"> <!--NavBar  -->
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" style="color: #ffffff" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Menu
+            </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="index_user.html">Página Inicial</a>
+            <a class="dropdown-item" href="monitoramento.html">Monitoramento</a>
+            <a class="dropdown-item" href="alerta.html">Histórico de alertas</a>
+            <a class="dropdown-item" href="profile.html">Perfil</a>
+            <a class="dropdown-item" href="config.html">Configurações</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" onclick="parar()">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <h1 class="mt-4">Perfil</h1>
+        <div class="cadastro">
+
+                <form onsubmit='event.preventDefault(); enviar()' id='form_atualizar' method='POST'>
+				<input type='hidden' value='' name='iduser' id='iduser'>
+                        <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="inputEmpresa">Nome da Empresa</label>
+                                  <input type="text" class="form-control" id="inputEmpresa" name='empresa' placeholder="">
+                              </div>
+                              <div class="form-group col-md-6">
+                                  <label for="inputcnpj">CNPJ</label>
+                                  <input type="number" class="form-control" id="inputcnpj" name='cnpj' placeholder="">
+                              </div>
+                              </div>
+                              <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                      <label for="inputcontato">Representante</label>
+                                      <input type="text" class="form-control" id="inputcontato" name='representante' placeholder="">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                        <label for="inputTelefone">Telefone</label>
+                                        <input type="number" class="form-control" id="inputTelefone" name='tel' placeholder="">
+                                  </div>
+                                  </div>
+                    <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputEmail4">Email</label>
+                            <input type="email" class="form-control" id="inputEmail4" name='email' placeholder="">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPassword4">Senha</label>
+                            <input type="password" class="form-control" id="inputPassword4" name='senha' placeholder="">
+                        </div>
+                        </div>
+                        <div class="form-group">
+                        <label for="inputAddress">Endereço</label>
+                        <input type="text" class="form-control" id="inputAddress" name='endereco' placeholder="">
+                        </div>
+						<div class="form-group">
+                        <label for="inputNumero" style="margin-right: 92.5%">Número</label>
+                        <input type="text" class="form-control" id="numero" name="numero" placeholder="nº 0">
+                        </div>
+                        <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputCity">Cidade</label>
+                            <input type="text" class="form-control" id="inputCity"  name='cidade'>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputEstado">Estado</label>
+                            <select id="inputEstado" name='estado' class="form-control">
+                            <option selected>Escolher...</option>
+                            <option value='AC'>AC</option>
+                            <option value='AL'>AL</option>
+                            <option value='AP'>AP</option>
+                            <option value='AM'>AM</option>
+                            <option value='BA'>BA</option>
+                            <option value='CE'>CE</option>
+                            <option value='DF'>DF</option>
+                            <option value='ES'>ES</option>
+                            <option value='GO'>GO</option>
+                            <option value='MA'>MA</option>
+                            <option value='MT'>MT</option>
+                            <option value='MS'>MS</option>
+                            <option value='MG'>MG</option>
+                            <option value='PA'>PA</option>
+                            <option value='PB'>PB</option>
+                            <option value='PR'>PR</option>
+                            <option value='PE'>PE</option>
+                            <option value='PI'>PI</option>
+                            <option value='RJ'>RJ</option>
+                            <option value='RN'>RN</option>
+                            <option value='RS'>RS</option>
+                            <option value='RO'>RO</option>
+                            <option value='RR'>RR</option>
+                            <option value='SC'>SC</option>
+                            <option value='SP'>SP</option>
+                            <option value='SE'>SE</option>
+                            <option value='TO'>TO</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="inputCEP">CEP</label>
+                            <input type="number" class="form-control" id="inputCEP"  name='cep'>
+                        </div>
+                        </div>
+                        <center><button type="submit" class="btn btn-primary" style="background-color:#39b300e1;border-color:#39b300e1">Atualizar dados</button>
+                        </center>
+                    </form>
+            </div> 
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor_user/jquery/jquery.min.js"></script>
+  <script src="vendor_user/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+	sessionStorage.form1 = 0;
+	sessionStorage.caminhaoForm = 0;
+    function parar()
+  {
+    sessionStorage.clear();
+    window.location = 'login.html';
+  }
+
+  function perfil(){
+		inputEmpresa.value = sessionStorage.empresa;
+		inputcnpj.value = sessionStorage.cnpj;
+		inputcontato.value = sessionStorage.usuario_bandtec;
+		inputTelefone.value = sessionStorage.tel;
+		inputPassword4.value = sessionStorage.senha;
+		inputEmail4.value = sessionStorage.email;
+		inputAddress.value = sessionStorage.endereco;
+		inputCity.value = sessionStorage.cidade;
+		inputCEP.value = sessionStorage.cep;
+		inputEstado.value = sessionStorage.estado;
+		iduser.value = sessionStorage.id
+		numero.value = sessionStorage.numero;
+        }
+	function enviar(){
+	var formulario = new URLSearchParams(new FormData(form_atualizar));
+        console.log(formulario);
+        fetch('/usuarios/profile', {
+            method: "POST",
+            body: formulario
+        }).then((response) => {
+            if(response.ok){
+                alert('Atualizado com sucesso!');
+				// sessionStorage.clear();
+				inputEmpresa.value = sessionStorage.empresa;
+				inputcnpj.value = sessionStorage.cnpj;
+				inputcontato.value = sessionStorage.usuario_bandtec;
+				inputTelefone.value = sessionStorage.tel;
+				inputPassword4.value = sessionStorage.senha;
+				inputEmail4.value = sessionStorage.email;
+				inputAddress.value = sessionStorage.endereco;
+				inputCity.value = sessionStorage.cidade;
+				inputCEP.value = sessionStorage.cep;
+				inputEstado.value = sessionStorage.estado;
+				iduser.value = sessionStorage.id
+				numero.value = sessionStorage.numero;
+                window.location = "index_user.html"
+                }else{
+                    console.log(`Erro no registro.`);
+                }
+            });
+                return false;
+	}
+</script>
+
+</body>
+
+</html>

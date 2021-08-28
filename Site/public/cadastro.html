@@ -1,0 +1,177 @@
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shotcut icon" href="img/loguinho.png" >
+    <title>DFS :: Cadastro</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+
+</head>
+<body>
+    <style>
+        body{
+            background: rgba(239, 239, 239);
+        }
+        .cadastro{
+            width: 1000px;
+            border-width: 3px;
+            border-style: solid;
+            border-radius: 10px;
+            padding: 20px;
+            background: #ffffff;
+            border-color: #39b300e1;
+        }
+        .logo
+            {
+                margin-top: 3%;
+                height: 110px;
+            }
+    </style>
+
+        <center><img class="logo" src="img/loguinhov.png"></center>
+        <br>
+        <center>
+        <h4>Cadastro</h4>
+        <div class="cadastro">
+
+            <form  id="form_cadastro" method="POST" onsubmit="event.preventDefault(); cadastrar()">
+                    <div class="form-row">
+                            <div class="form-group col-md-6">
+                              <label for="inputEmpresa" style="margin-right: 70%">Nome da Empresa</label>
+                              <input type="text" class="form-control" id="empresa "name="empresa" placeholder="Digital Fruits Solutions">
+                          </div>
+                          <div class="form-group col-md-6">
+                              <label for="inputcnpj" style="margin-right: 91%">CNPJ</label>
+                              <input type="text" class="form-control" id="cnpj" name="cnpj" placeholder="xx.xxx.xxx/xxxx-xx">
+                          </div>
+                          </div>
+                          <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <label for="inputcontato" style="margin-right: 77%">Representante</label>
+                                  <input type="text" class="form-control" id="representante" name="representante" placeholder="José da Silva">
+                              </div>
+                              <div class="form-group col-md-6">
+                                    <label for="inputTelefone" style="margin-right: 87%">Telefone</label>
+                                    <input type="number" class="form-control" id="telefone" name="telefone" placeholder="(xx)xxxxx-xxxx">
+                              </div>
+                              </div>
+                <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputEmail4" style="margin-right: 90%">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="abcdefgsa@xxx.com">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4" style="margin-right: 90%">Senha</label>
+                        <input type="password" class="form-control" id="senha" name="senha" placeholder="*******">
+                    </div>
+                    </div>
+                    <div class="form-group">
+                    <label for="inputAddress" style="margin-right: 92.5%">Endereço</label>
+                    <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Avenida Paulista, nº 0">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputNumero" style="margin-right: 92.5%">Número</label>
+                        <input type="text" class="form-control" id="numero" name="numero" placeholder="nº 0">
+                        </div>
+                    <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity" style="margin-right: 88%">Cidade</label>
+                        <input type="text" class="form-control" id="cidade" name="cidade" placeholder="São Paulo">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputEstado" style="margin-right: 83%">Estado</label>
+                        <select id="estado" name="estado" class="form-control">
+                        <option selected>Escolher...</option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MG">MG</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="PR">PR</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="RS">RS</option>
+                        <option value="SC">SC</option>
+                        <option value="SE">SE</option>
+                        <option value="SP">SP</option>
+                        <option value="TO">TO</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputCEP" style="margin-right: 78%">CEP</label>
+                        <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000">
+                    </div>
+                    </div>
+                    <center><button class="btn btn-primary" style="background-color:#39b300e1;border-color:#39b300e1; border-radius: 7px;">Criar conta</button>
+                    </center>
+                </form>
+        </div> 
+        </center>  
+        <center>
+            <img src="img/aguarde.gif" id="img_aguarde" style="display: none;" width="100px" height="100px">
+    </center>     
+</body>
+</html>
+<script>
+    sessionStorage.form1 = 0;
+	sessionStorage.caminhaoForm = 0;
+	function cadastrar()
+     {
+        //   if (empresa.value=='' || cnpj.value=='' || contato.value=='' || telefone.value=='' || email.value=='' || senha.value=='' || endereco.value=='' || numero.value=='' || cidade.value=='' || estado.value=='' || cep.value=='')
+        //   {
+        //       alert('Preencha corretamente os dados!');
+        //       return false;
+        //     }
+        //  else
+        //  {
+        //      alert('Formulário preenchido corretamente');
+        //  }
+
+
+       // aguardar();
+        var formulario = new URLSearchParams(new FormData(form_cadastro));
+        console.log(formulario);
+        fetch('/usuarios/cadastrar', {
+            method: "POST",
+            body: formulario
+        }).then((response) => {
+            if(response.ok){
+                alert('Cadastrado com sucesso!');
+                window.location = "login.html"
+                }else{
+                    console.log(`Erro no registro.`);
+                }
+            });
+                return false;
+        }
+    
+    // function aguardar() {
+    //     // btn_entrar.disabled = true;
+    //     img_aguarde.style.display='block';
+    // }
+    // function finalizar_aguardar() {
+    //    // btn_entrar.disabled = false;
+    //     img_aguarde.style.display='none';
+    //     alert('Cadastro inválido');
+    // }
+
+
+    
+</script>
